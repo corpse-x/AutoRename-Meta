@@ -2,14 +2,14 @@ import logging
 import logging.config
 import warnings
 from pyrogram import Client, idle
-from pyrogram import Client, __version__
+from pyrogram import __version__
 from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
 from pytz import timezone
 from datetime import datetime
 import asyncio
-from plugins.web_support import web_server
+from route import web_server
 import pyromod
 
 logging.config.fileConfig("logging.conf")
@@ -45,8 +45,8 @@ class Bot(Client):
                 await self.send_message(
                     id, f"**__{me.first_name}  Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**"
                 )
-            except:
-                pass
+            except Exception as e:
+                logging.error(f"Failed to send message to admin {id}: {e}")
 
         if Config.LOG_CHANNEL:
             try:
@@ -55,10 +55,10 @@ class Bot(Client):
                 time = curr.strftime("%I:%M:%S %p")
                 await self.send_message(
                     Config.LOG_CHANNEL,
-                    f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\🤖 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>",
+                    f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n🤖 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`",
                 )
-            except:
-                print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
+            except Exception as e:
+                logging.error(f"Failed to send log message to channel: {e}")
 
     async def stop(self, *args):
         await super().stop()
@@ -70,13 +70,7 @@ bot_instance = Bot()
 
 def main():
     async def start_services():
-        if Config.STRING_SESSION:
-            await asyncio.gather(
-                app.start(),  # Start the Pyrogram Client
-                bot_instance.start(),  # Start the bot instance
-            )
-        else:
-            await asyncio.gather(bot_instance.start())
+        await bot_instance.start()  # Start the bot instance
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(start_services())
