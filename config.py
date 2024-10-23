@@ -36,7 +36,7 @@ class Txt(object):
 ➻ This Bot Also Supports Custom Thumbnail And Custom Caption.
 
 ➻ Use /tutorial Command To Know How To Use Me.
-
+- For metadata type /metadata
 <b> ;) </b>
 
 <b> Under : @STERN_LEGION </b>
@@ -73,6 +73,12 @@ Use These Keywords To Setup Custom File Name
 ⦿ /set_caption - Use This Command To Set Your Caption
 ⦿ /see_caption - Use This Command To See Your Caption
 ⦿ /del_caption - Use This Command To Delete Your Caption"""
+
+    SEND_METADATA = """<b><u>🖼️  HOW TO SET CUSTOM METADATA</u></b>
+
+
+Report any bug on : @yukilogs
+======="""
 
     PROGRESS_BAR = """<b>\n
 ╭━━━━❰ᴘʀᴏɢʀᴇss ʙᴀʀ❱━➣
